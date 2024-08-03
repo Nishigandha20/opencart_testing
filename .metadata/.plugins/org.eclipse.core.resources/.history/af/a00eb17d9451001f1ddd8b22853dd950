@@ -1,0 +1,51 @@
+package testCases;
+
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import pageObjects.HomePage;
+import pageObjects.RegistrationPage;
+
+public class TC001_AccountRegistrationTest {
+
+	WebDriver driver;
+	public void setup()
+	{
+		driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		
+		driver.get("https://tutorialsninja.com/demo/");
+		driver.manage().window().maximize();
+	}
+	
+	public void tearDown()
+	{
+		driver.close();
+	}
+	
+	public void verify_registration()
+	{
+		HomePage hp = new HomePage(driver);
+		hp.clickMyAccount();
+		hp.clickRegister();
+		
+		RegistrationPage rp = new RegistrationPage(driver);
+		rp.setFirstName(randomeString().toUpperCase());
+		rp.setlastName(randomeString().toUpperCase());
+		rp.setEmail(randomeString()+"@gmail.com");
+		rp.setPhoneNum(randomeNumber());
+		
+		String password = randomAlphaNumeric();
+		rp.setPassword(password);
+		rp.setConfirmPass(password);
+		
+		rp.setPrivacy();
+		rp.clickContinue();
+	}
+	
+	public void randomeString() {
+		
+	}
+}
